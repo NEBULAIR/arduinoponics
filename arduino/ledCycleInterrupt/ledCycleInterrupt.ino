@@ -1,11 +1,17 @@
-// Arduino timer CTC interrupt example
-//
 // avr-libc library includes
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #define LEDPIN 8
 
-volatile byte seconds;
+int daycycle = 14; // number of hours the day lasts (LEDs ON)
+int nightcycle = 10; // number of hours the day lasts (LEDs OFF)
+
+long hourseconds = 3600; // number of seconds in an hour
+unsigned long daycycleseconds = hourseconds * daycycle;
+unsigned long nightcycleseconds = hourseconds * nightcycle;
+
+volatile boolean isday = true;
+volatile unsigned long current = 0;
 
 void setup()
 {
@@ -30,19 +36,38 @@ void setup()
   
   // enable global interrupts:
   sei();
+
+  // switches LEDs ON
+  digitalWrite(LEDPIN, HIGH);
 }
 
 void loop()
 {
-// main program
+// nothing for now
 }
 
 ISR(TIMER1_COMPA_vect)
 {
-  seconds++;
-  if(seconds == 10)
-  {
-    seconds = 0;
-    digitalWrite(LEDPIN, !digitalRead(LEDPIN));
+  current++;
+  if(isday){
+    if(current == daycycleseconds){
+      apply();
+    }
+  }
+  else{
+    if(current == nightcycleseconds){
+      apply();
+    }
   }
 }
+
+void apply(){
+  current = 0;
+  isday = !isday; // switching day/night
+  switchLeds();
+}
+
+void switchLeds(){
+  digitalWrite(LEDPIN, !digitalRead(LEDPIN));
+}
+
