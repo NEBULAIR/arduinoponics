@@ -13,12 +13,15 @@
 #include <avr/interrupt.h>
 
 // Pin definitions
-#define LAMP          8     // Pin of the lamp relay
 #define LED           13    // For Leonardo built in led
-#define PUMP_IN       9     // Pin of the pump 1
-#define PUMP_OUT      10    // Pin of the pump 2
-#define WATER_UP      4     // Pin of the water sensor 1
-#define WATER_DOWN    5     // Pin of the water sensor 2
+// -Relays
+#define PUMP_IN       2     // Pin of the pump 1
+#define PUMP_OUT      3    // Pin of the pump 2
+#define LAMP          4     // Pin of the lamp relay
+#define FOG           5     // Pin of the lamp relay
+// -Sensors
+#define WATER_UP      9     // Pin of the water sensor 1
+#define WATER_DOWN    8     // Pin of the water sensor 2
 
 // Time definition
 #define DAY_TIME      14    // Number of hours the day lasts (LAMP ON)
