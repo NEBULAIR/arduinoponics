@@ -1,10 +1,7 @@
 /*
- * 
- * 
- * 
- *  Clock mechanism to execut an action every houres
+ *  Clock mechanism to execute an action every hour
  *  
- *  TODO Switch action reset houre to 9
+ *  TODO Switch action reset hours to 9
  *  TODO Safety extra sensor
  */
 
@@ -24,10 +21,10 @@
 #define WATER_DOWN    8     // Pin of the water sensor 2
 
 // Time definition
-#define DAY_TIME      14    // Number of hours the day lasts (LAMP ON)
-#define DAY_START     9     // Hour of the day that the day start
+#define DAY_TIME      14    // Number of hours of daylight (LAMP ON)
+#define DAY_START     9     // Hour of the day that the day starts
 #define PUMP_CYCLE    15    // Time between 2 pump cycles
-#define WATER_UP_TIME 5     // Time to keep water up
+#define WATER_UP_TIME 5     // Time to water at high level
 
 #define SIMULATION true //Boolean to activate the simulation (reduce time 1mn = 1s)
 
@@ -152,8 +149,8 @@ void seconds_timer(void)
   // Every  60min increment the hours counter
   if (0 == minutesCounter % 60)
   {
-    hoursCounter ++;        // Increment the hours counter
-    minutesCounter = 0;     // Clear the minutes counter
+    hoursCounter ++;        // Increments the hours counter
+    minutesCounter = 0;     // Clears the minutes counter
     
     // At the end of the day reset the hours counter
     if (23 < hoursCounter)
@@ -161,7 +158,7 @@ void seconds_timer(void)
       hoursCounter = 0;     // Clear the hours counter
     }
 
-    // Execute following code one time every hours
+    // Execute following code once every hour
     hours_action();
   }
 }
